@@ -45,11 +45,11 @@ public class Student{
         this.marks = marks;
     }
 
-    String toCSV(){
+    public String toCSV(){
         return String.join(",", studentId, name, String.valueOf(age), String.valueOf(marks), department.getDisplayName());
     }
 
-    static Student fromCSV(String line){
+    public static Student fromCSV(String line){
         String[] parts = line.split(",");
         return new Student(
                 parts[0], parts[1], Integer.parseInt(parts[2]), Double.parseDouble(parts[3]), Department.dept.valueOf(parts[4])
