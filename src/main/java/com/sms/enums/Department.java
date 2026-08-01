@@ -18,5 +18,14 @@ public class Department {
         public String getDisplayName(){
             return this.displayName;
         }
+
+        public static dept fromDisplayName(String displayName) {
+            for (dept d : values()) {
+                if (d.getDisplayName().equalsIgnoreCase(displayName)) {
+                    return d;
+                }
+            }
+            throw new IllegalArgumentException("Invalid department: " + displayName);
+        }
     }
 }

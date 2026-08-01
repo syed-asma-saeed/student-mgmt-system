@@ -27,7 +27,10 @@ public class FileHandler {
         try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             while ((line = br.readLine()) != null) {
-                list.add(fromCSV(line));
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+                list.add(Student.fromCSV(line));
             }
         } catch (IOException e) {
             e.printStackTrace();

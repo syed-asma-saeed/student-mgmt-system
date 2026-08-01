@@ -9,6 +9,8 @@ import com.sms.utils.Sorter;
 
 import java.util.*;
 
+import static java.util.Collections.reverseOrder;
+
 public class StudentService{
 
     private Map<String, Student> students = new HashMap<>();
@@ -16,10 +18,10 @@ public class StudentService{
     private Sorter<Student> sorter = new Sorter<>();
     private int counter = 1000;
 
-    StudentService(){
+    public StudentService(){
         List<Student> students = fileHandler.loadAll();
         for(Student st: students){
-            this.students.put("STU"+(counter++), st);
+            this.students.put("S"+(counter++), st);
         }
     }
 
@@ -49,15 +51,15 @@ public class StudentService{
     }
 
     public void deleteStudent(String id) throws StudentNotFoundException{
-        try {
-            if (students.containsKey(id)) {
-                students.remove(id);
-            }
-        }catch (Exception e) {
-            throw new StudentNotFoundException("Student does not exist with the given StudentID: " + id);
-        }finally{
-            save();
+
+        if (!students.containsKey(id)) {
+            throw new StudentNotFoundException(
+                    "Student does not exist with the given StudentID: " + id
+            );
         }
+
+        students.remove(id);
+        save();
     }
 
     public List<Student> searchByName(String name){
@@ -83,15 +85,17 @@ public class StudentService{
     }
 
     public List<Student> getAllSortedByName(){
+        System.out.println("Total students: " + students.size());
         List<Student> result = new ArrayList<>(students.values());
-        sorter.sort(result, Comparator.comparing(Student::getName));
+        result = sorter.sort(result, Comparator.comparing(Student::getName));
 
         return result;
     }
 
     public List<Student> getAllSortedByMarks(){
+        System.out.println("Total students: " + students.size());
         List<Student> result = new ArrayList<>(students.values());
-        sorter.sort(result, Comparator.comparing(Student::getMarks));
+        result = sorter.sort(result, Comparator.comparingDouble(Student::getMarks).reversed());
 
         return result;
     }

@@ -3,11 +3,11 @@ package com.sms.models;
 import com.sms.enums.Department;
 
 public class Student{
-    private String studentId;
+    private final String studentId;
     private String name;
-    private int age;
+    private final int age;
     private double marks;
-    private Department.dept department;
+    private final Department.dept department;
 
     public Student(String studentId, String name, int age, double marks, Department.dept department){
         this.studentId = studentId;
@@ -45,14 +45,26 @@ public class Student{
         this.marks = marks;
     }
 
-    public String toCSV(){
-        return String.join(",", studentId, name, String.valueOf(age), String.valueOf(marks), department.getDisplayName());
+    public String toCSV() {
+        return String.join(",",
+                studentId,
+                name,
+                String.valueOf(age),
+                String.valueOf(marks),
+                department.name());
     }
 
-    public static Student fromCSV(String line){
+    public static Student fromCSV(String line) {
         String[] parts = line.split(",");
+        if (parts.length != 5) {
+            throw new IllegalArgumentException("Invalid CSV record: " + line);
+        }
         return new Student(
-                parts[0], parts[1], Integer.parseInt(parts[2]), Double.parseDouble(parts[3]), Department.dept.valueOf(parts[4])
+                parts[0],
+                parts[1],
+                Integer.parseInt(parts[2]),
+                Double.parseDouble(parts[3]),
+                Department.dept.valueOf(parts[4])
         );
     }
 
