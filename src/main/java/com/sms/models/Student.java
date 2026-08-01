@@ -9,7 +9,7 @@ public class Student{
     private double marks;
     private Department.dept department;
 
-    Student(String studentId, String name, int age, double marks, Department.dept department){
+    public Student(String studentId, String name, int age, double marks, Department.dept department){
         this.studentId = studentId;
         this.name = name;
         this.age = age;
@@ -17,31 +17,31 @@ public class Student{
         this.department = department;
     }
 
-    String getStudentId(){
+    public String getStudentId(){
         return this.studentId;
     }
 
-    String getName(){
+    public String getName(){
         return this.name;
     }
 
-    int getAge(){
+    public int getAge(){
         return this.age;
     }
 
-    double getMarks(){
+    public double getMarks(){
         return this.marks;
     }
 
-    Department.dept getDepartment(){
+    public Department.dept getDepartment(){
         return this.department;
     }
 
-    void setName(String name){
+    public void setName(String name){
         this.name = name;
     }
 
-    void setMarks(double marks){
+    public void setMarks(double marks){
         this.marks = marks;
     }
 
